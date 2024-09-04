@@ -1,14 +1,16 @@
 import com.volodya.coordinates.*
+import java.util.InputMismatchException
 import java.util.Scanner
 
-fun printCoordinates(coordinates: Pair<Boolean, Coordinates>, precision: Int) {
-    if (!coordinates.first) {
-        println(coordinates.second.getName())
-        println(coordinates.second.getCoordinates(precision))
+fun printCoordinates(coordinates: Coordinates?, precision: Int) {
+    if (coordinates != null) {
+        println(coordinates.getName())
+        println(coordinates.getCoordinates(precision))
     }
 }
 
 fun start() {
+    mainLoop@
     while (true) {
         print(
             "Выберите исходную систему координат:\n" +
@@ -24,7 +26,12 @@ fun start() {
         if (ans == "q") {
             break
         } else {
-            val intAns = ans.toInt()
+            var intAns: Int
+            try {
+                intAns = ans.toInt()
+            } catch (e: NumberFormatException) {
+                continue@mainLoop
+            }
             val args = arrayListOf<Double>()
             val fields: Array<Char> = when (intAns) {
                 1 -> DECART2D_FIELDS
@@ -33,7 +40,7 @@ fun start() {
                 4 -> CYLINDRICAL_FIELDS
                 5 -> SPHERICAL_FIELDS
                 else -> {
-                    continue
+                    continue@mainLoop
                 }
             }
             print('\n')
@@ -41,7 +48,11 @@ fun start() {
             println("Введите координаты:")
             for (i in fields) {
                 print("${i}: ")
-                args.add(scanner.nextDouble())
+                try {
+                    args.add(scanner.nextDouble())
+                } catch (e: InputMismatchException) {
+                    continue@mainLoop
+                }
             }
             val coordinates: Coordinates = when (intAns) {
                 1 -> Decart2d(args[0], args[1])
@@ -50,36 +61,25 @@ fun start() {
                 4 -> CylindricalCoordinates(args[0], args[1], args[2])
                 5 -> SphericalCoordinates(args[0], args[1], args[2])
                 else -> {
-                    continue
+                    continue@mainLoop
                 }
             }
             print('\n')
 
             println("Округление:")
-            val precision: Int = scanner.nextInt()
+            var precision: Int
+            try {
+                precision = scanner.nextInt()
+            } catch (e: InputMismatchException) {
+                continue@mainLoop
+            }
             print('\n')
 
-            var tempCoordinates: Pair<Boolean, Coordinates>
-            if (intAns != 1) {
-                tempCoordinates = coordinates.toDecart2d()
-                printCoordinates(tempCoordinates, precision)
-            }
-            if (intAns != 2) {
-                tempCoordinates = coordinates.toDecart3d()
-                printCoordinates(tempCoordinates, precision)
-            }
-            if (intAns != 3) {
-                tempCoordinates = coordinates.toPolar()
-                printCoordinates(tempCoordinates, precision)
-            }
-            if (intAns != 4) {
-                tempCoordinates = coordinates.toCylindrical()
-                printCoordinates(tempCoordinates, precision)
-            }
-            if (intAns != 5) {
-                tempCoordinates = coordinates.toSpherical()
-                printCoordinates(tempCoordinates, precision)
-            }
+            printCoordinates(coordinates.toDecart2d(), precision)
+            printCoordinates(coordinates.toDecart3d(), precision)
+            printCoordinates(coordinates.toPolar(), precision)
+            printCoordinates(coordinates.toCylindrical(), precision)
+            printCoordinates(coordinates.toSpherical(), precision)
             print('\n')
         }
     }

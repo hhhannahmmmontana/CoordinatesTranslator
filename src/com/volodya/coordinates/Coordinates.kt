@@ -9,11 +9,11 @@ fun doubleToString(value: Double, precision: Int) : String {
 interface Coordinates {
     fun getName() : String
     fun getFields() : Array<Char>
-    fun toDecart2d() : Pair<Boolean, Coordinates>
-    fun toPolar() : Pair<Boolean, Coordinates>
-    fun toDecart3d() : Pair<Boolean, Coordinates>
-    fun toCylindrical() : Pair<Boolean, Coordinates>
-    fun toSpherical() : Pair<Boolean, Coordinates>
+    fun toDecart2d() : Coordinates?
+    fun toPolar() : Coordinates?
+    fun toDecart3d() : Coordinates?
+    fun toCylindrical() : Coordinates?
+    fun toSpherical() : Coordinates?
     fun getCoordinates(precision: Int) : String
 }
 
@@ -48,22 +48,22 @@ class Decart2d(private var x: Double, private var y: Double) : Coordinates {
         this.y = y
     }
 
-    override fun toDecart2d(): Pair<Boolean, Decart2d> {
-        return Pair(false, this)
+    override fun toDecart2d(): Coordinates? {
+        return null
     }
-    override fun toPolar(): Pair<Boolean, PolarCoordinates> {
+    override fun toPolar(): PolarCoordinates {
         val rho = sqrt(x * x + y * y)
         val phi = atan2(y, x)
-        return Pair(false, PolarCoordinates(rho, phi))
+        return PolarCoordinates(rho, phi)
     }
-    override fun toDecart3d(): Pair<Boolean, Decart2d> {
-        return Pair(true, this)
+    override fun toDecart3d(): Coordinates? {
+        return null
     }
-    override fun toCylindrical(): Pair<Boolean, Decart2d> {
-        return Pair(true, this)
+    override fun toCylindrical(): Coordinates? {
+        return null
     }
-    override fun toSpherical(): Pair<Boolean, Decart2d> {
-        return Pair(true, this)
+    override fun toSpherical(): Coordinates? {
+        return null
     }
     override fun getCoordinates(precision: Int) : String {
         return (
@@ -92,22 +92,22 @@ class PolarCoordinates(private var rho : Double, private var phi : Double) : Coo
         this.phi = phi
     }
 
-    override fun toDecart2d(): Pair<Boolean, Decart2d> {
+    override fun toDecart2d(): Decart2d {
         val x = rho * cos(phi)
         val y = rho * sin(phi)
-        return Pair(false, Decart2d(x, y))
+        return Decart2d(x, y)
     }
-    override fun toPolar(): Pair<Boolean, PolarCoordinates> {
-        return Pair(false, this)
+    override fun toPolar(): Coordinates? {
+        return null
     }
-    override fun toDecart3d(): Pair<Boolean, PolarCoordinates> {
-        return Pair(true, this)
+    override fun toDecart3d(): Coordinates?{
+        return null
     }
-    override fun toCylindrical(): Pair<Boolean, PolarCoordinates> {
-        return Pair(true, this)
+    override fun toCylindrical(): Coordinates? {
+        return null
     }
-    override fun toSpherical(): Pair<Boolean, PolarCoordinates> {
-        return Pair(true, this)
+    override fun toSpherical(): Coordinates? {
+        return null
     }
     override fun getCoordinates(precision: Int) : String {
         return (
@@ -140,25 +140,25 @@ class Decart3d(private var x: Double, private var y: Double, private var z: Doub
         this.z = z
     }
 
-    override fun toDecart2d(): Pair<Boolean, Decart3d> {
-        return Pair(true, this)
+    override fun toDecart2d(): Coordinates? {
+        return null
     }
-    override fun toPolar(): Pair<Boolean, Decart3d> {
-        return Pair(true, this)
+    override fun toPolar(): Coordinates? {
+        return null
     }
-    override fun toDecart3d(): Pair<Boolean, Decart3d> {
-        return Pair(false, this)
+    override fun toDecart3d(): Coordinates? {
+        return null
     }
-    override fun toCylindrical(): Pair<Boolean, CylindricalCoordinates> {
+    override fun toCylindrical(): CylindricalCoordinates {
         val rho = sqrt(x * x + y * y)
         val phi = atan2(y, x)
-        return Pair(false, CylindricalCoordinates(rho, phi, z))
+        return CylindricalCoordinates(rho, phi, z)
     }
-    override fun toSpherical(): Pair<Boolean, SphericalCoordinates> {
+    override fun toSpherical(): SphericalCoordinates {
         val r = sqrt(x * x + y * y + z * z)
         val theta = atan(sqrt(x * x + y * y) / z)
         val phi = atan2(y, x)
-        return Pair(false, SphericalCoordinates(r, theta, phi))
+        return SphericalCoordinates(r, theta, phi)
     }
     override fun getCoordinates(precision: Int) : String {
         return (
@@ -194,24 +194,24 @@ class CylindricalCoordinates(
         this.z = z
     }
 
-    override fun toDecart2d(): Pair<Boolean, CylindricalCoordinates> {
-        return Pair(true, this)
+    override fun toDecart2d(): Coordinates? {
+        return null
     }
-    override fun toPolar(): Pair<Boolean, CylindricalCoordinates> {
-        return Pair(true, this)
+    override fun toPolar(): Coordinates? {
+        return null
     }
-    override fun toDecart3d(): Pair<Boolean, Decart3d> {
+    override fun toDecart3d(): Decart3d {
         val x = rho * cos(phi)
         val y = rho * sin(phi)
-        return Pair(false, Decart3d(x, y, z))
+        return Decart3d(x, y, z)
     }
-    override fun toCylindrical(): Pair<Boolean, Coordinates> {
-        return Pair(false, this)
+    override fun toCylindrical(): Coordinates? {
+        return null
     }
-    override fun toSpherical(): Pair<Boolean, SphericalCoordinates> {
+    override fun toSpherical(): SphericalCoordinates {
         val r = sqrt(rho * rho + z * z)
         val theta = atan2(rho, z)
-        return Pair(false, SphericalCoordinates(r, theta, phi))
+        return SphericalCoordinates(r, theta, phi)
     }
     override fun getCoordinates(precision: Int): String {
         return (
@@ -243,25 +243,25 @@ class SphericalCoordinates(
         return phi
     }
 
-    override fun toDecart2d(): Pair<Boolean, SphericalCoordinates> {
-        return Pair(true, this)
+    override fun toDecart2d(): Coordinates? {
+        return null
     }
-    override fun toPolar(): Pair<Boolean, SphericalCoordinates> {
-        return Pair(true, this)
+    override fun toPolar(): Coordinates? {
+        return null
     }
-    override fun toDecart3d(): Pair<Boolean, Decart3d> {
+    override fun toDecart3d(): Decart3d {
         val x = r * sin(theta) * cos(phi)
         val y = r * sin(theta) * sin(phi)
         val z = r * cos(theta)
-        return Pair(false, Decart3d(x, y, z))
+        return Decart3d(x, y, z)
     }
-    override fun toCylindrical(): Pair<Boolean, CylindricalCoordinates> {
+    override fun toCylindrical(): CylindricalCoordinates {
         val rho = r * sin(theta)
         val z = r * cos(theta)
-        return Pair(false, CylindricalCoordinates(rho, phi, z))
+        return CylindricalCoordinates(rho, phi, z)
     }
-    override fun toSpherical(): Pair<Boolean, SphericalCoordinates> {
-        return Pair(false, this)
+    override fun toSpherical(): Coordinates? {
+        return null
     }
     override fun getCoordinates(precision: Int): String {
         return (
