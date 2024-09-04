@@ -24,10 +24,10 @@ const val CYLINDRICAL_NAME = "Цилинричнские координаты"
 const val SPHERICAL_NAME = "Сферические координаты"
 
 val DECART2D_FIELDS = arrayOf('x', 'y')
-val POLAR_FIELDS = arrayOf('ρ', 'φ')
+val POLAR_FIELDS = arrayOf('р', 'ф')
 val DECART3D_FIELDS = arrayOf('x', 'y', 'z')
-val CYLINDRICAL_FIELDS = arrayOf('ρ', 'φ', 'z')
-val SPHERICAL_FIELDS = arrayOf('r', 'θ', 'φ')
+val CYLINDRICAL_FIELDS = arrayOf('р', 'ф', 'z')
+val SPHERICAL_FIELDS = arrayOf('r', '0', 'ф')
 
 class Decart2d(private var x: Double, private var y: Double) : Coordinates {
     override fun getName() : String {
@@ -67,8 +67,8 @@ class Decart2d(private var x: Double, private var y: Double) : Coordinates {
     }
     override fun getCoordinates(precision: Int) : String {
         return (
-                "x: ${doubleToString(x, precision)};\n" +
-                "y: ${doubleToString(y, precision)}."
+                "${DECART2D_FIELDS[0]}: ${doubleToString(x, precision)};\n" +
+                "${DECART2D_FIELDS[0]}: ${doubleToString(y, precision)}."
         )
     }
 }
@@ -111,8 +111,8 @@ class PolarCoordinates(private var rho : Double, private var phi : Double) : Coo
     }
     override fun getCoordinates(precision: Int) : String {
         return (
-                "ρ: ${doubleToString(rho, precision)};\n" +
-                "φ: ${doubleToString(phi, precision)}rad."
+                "${POLAR_FIELDS[0]}: ${doubleToString(rho, precision)};\n" +
+                "${POLAR_FIELDS[1]}: ${doubleToString(phi, precision)}rad."
         )
     }
 }
@@ -162,9 +162,9 @@ class Decart3d(private var x: Double, private var y: Double, private var z: Doub
     }
     override fun getCoordinates(precision: Int) : String {
         return (
-                "x: ${doubleToString(x, precision)};\n" +
-                "y: ${doubleToString(y, precision)};\n" +
-                "z: ${doubleToString(z, precision)}."
+                "${DECART3D_FIELDS[0]}: ${doubleToString(x, precision)};\n" +
+                "${DECART3D_FIELDS[1]}: ${doubleToString(y, precision)};\n" +
+                "${DECART3D_FIELDS[2]}: ${doubleToString(z, precision)}."
         )
     }
 }
@@ -215,9 +215,9 @@ class CylindricalCoordinates(
     }
     override fun getCoordinates(precision: Int): String {
         return (
-                "ρ: ${doubleToString(rho, precision)};\n" +
-                "φ: ${doubleToString(phi, precision)}rad;\n" +
-                "z: ${doubleToString(z, precision)}."
+                "${CYLINDRICAL_FIELDS[0]}: ${doubleToString(rho, precision)};\n" +
+                "${CYLINDRICAL_FIELDS[1]}: ${doubleToString(phi, precision)}rad;\n" +
+                "${CYLINDRICAL_FIELDS[2]}: ${doubleToString(z, precision)}."
         )
     }
 
@@ -265,9 +265,9 @@ class SphericalCoordinates(
     }
     override fun getCoordinates(precision: Int): String {
         return (
-                "r: ${doubleToString(r, precision)};\n" +
-                "θ: ${doubleToString(theta, precision)}rad;\n" +
-                "φ: ${doubleToString(phi, precision)}rad."
+                "${SPHERICAL_FIELDS[0]}: ${doubleToString(r, precision)};\n" +
+                "${SPHERICAL_FIELDS[1]}: ${doubleToString(theta, precision)}rad;\n" +
+                "${SPHERICAL_FIELDS[2]}: ${doubleToString(phi, precision)}rad."
         )
     }
 }
