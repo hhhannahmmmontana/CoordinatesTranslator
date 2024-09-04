@@ -68,7 +68,7 @@ class Decart2d(private var x: Double, private var y: Double) : Coordinates {
     override fun getCoordinates(precision: Int) : String {
         return (
                 "${DECART2D_FIELDS[0]}: ${doubleToString(x, precision)};\n" +
-                "${DECART2D_FIELDS[0]}: ${doubleToString(y, precision)}."
+                "${DECART2D_FIELDS[0]}: ${doubleToString(y, precision)}.\n"
         )
     }
 }
@@ -112,7 +112,7 @@ class PolarCoordinates(private var rho : Double, private var phi : Double) : Coo
     override fun getCoordinates(precision: Int) : String {
         return (
                 "${POLAR_FIELDS[0]}: ${doubleToString(rho, precision)};\n" +
-                "${POLAR_FIELDS[1]}: ${doubleToString(phi, precision)}rad."
+                "${POLAR_FIELDS[1]}: ${doubleToString(phi, precision)}rad.\n"
         )
     }
 }
@@ -164,7 +164,7 @@ class Decart3d(private var x: Double, private var y: Double, private var z: Doub
         return (
                 "${DECART3D_FIELDS[0]}: ${doubleToString(x, precision)};\n" +
                 "${DECART3D_FIELDS[1]}: ${doubleToString(y, precision)};\n" +
-                "${DECART3D_FIELDS[2]}: ${doubleToString(z, precision)}."
+                "${DECART3D_FIELDS[2]}: ${doubleToString(z, precision)}.\n"
         )
     }
 }
@@ -217,7 +217,7 @@ class CylindricalCoordinates(
         return (
                 "${CYLINDRICAL_FIELDS[0]}: ${doubleToString(rho, precision)};\n" +
                 "${CYLINDRICAL_FIELDS[1]}: ${doubleToString(phi, precision)}rad;\n" +
-                "${CYLINDRICAL_FIELDS[2]}: ${doubleToString(z, precision)}."
+                "${CYLINDRICAL_FIELDS[2]}: ${doubleToString(z, precision)}.\n"
         )
     }
 
@@ -267,7 +267,7 @@ class SphericalCoordinates(
         return (
                 "${SPHERICAL_FIELDS[0]}: ${doubleToString(r, precision)};\n" +
                 "${SPHERICAL_FIELDS[1]}: ${doubleToString(theta, precision)}rad;\n" +
-                "${SPHERICAL_FIELDS[2]}: ${doubleToString(phi, precision)}rad."
+                "${SPHERICAL_FIELDS[2]}: ${doubleToString(phi, precision)}rad.\n"
         )
     }
 }
